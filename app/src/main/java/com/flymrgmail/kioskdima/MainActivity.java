@@ -82,12 +82,21 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("HANDLER", "RUN");
                         backBtnPress = 0;
                     }
                 }, 3000);
                 return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (1 <= backBtnPress)
+                    backBtnPress += 1;
+                if (backBtnPress == 5){
+                    if (!preferencesHelper.getPass().equals("")){
+                        showPasswordDialog();
+                    } else {
+                        openSettingActivity();
+                    }
+
+                }
                 return true;
             case KeyEvent.KEYCODE_POWER:
                 Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -101,16 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (1 <= backBtnPress)
-            backBtnPress += 1;
-        if (backBtnPress == 5){
-            if (!preferencesHelper.getPass().equals("")){
-                showPasswordDialog();
-            } else {
-                openSettingActivity();
-            }
 
-        }
     }
 
     private void openSettingActivity(){
